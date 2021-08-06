@@ -27,8 +27,14 @@ public class PostagemController {
 	private PostagemRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Postagem>> GetAll(){
-		return ResponseEntity.ok(repository.findAll());
+	public ResponseEntity<Object> buscarLista(){
+		List<Postagem> listpost = repository.findAll();
+		
+		if(listpost.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}else {
+			return ResponseEntity.status(200).body(listpost);
+		}
 	}
 	
 	@GetMapping("/{id}")
